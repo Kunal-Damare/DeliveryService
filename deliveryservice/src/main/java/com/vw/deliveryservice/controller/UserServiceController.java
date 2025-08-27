@@ -64,7 +64,7 @@ public class UserServiceController {
 	 * HttpStatus.BAD_REQUEST); } }
 	 */
 
-	// Used for generating token
+	// Used for generating token for authantication
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestBody User user) {
 		try {
