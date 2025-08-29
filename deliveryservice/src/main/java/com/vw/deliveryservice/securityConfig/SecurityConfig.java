@@ -35,10 +35,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/user/login", "/user/save").permitAll() // Public access for login & user creation
-                .requestMatchers("/user/getAllUsers" , "/role/getAllRoles").hasAuthority("ROLE_ADMIN")// Restrict admin-only access
-                .requestMatchers("/user/updateUser/{id}").authenticated()
-                .requestMatchers("/order/CreateOrder").authenticated()
+                    .requestMatchers("/user/login", "/user/save").permitAll() // Public access for login & user creation
+                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+                    .requestMatchers("/user/getAllUsers" , "/role/getAllRoles").hasAuthority("ROLE_ADMIN")// Restrict admin-only access
+                    .requestMatchers("/user/updateUser/{id}").authenticated()
+                    .requestMatchers("/order/CreateOrder").authenticated()
                 .anyRequest().authenticated()) // Require authentication for all other endpoints
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
